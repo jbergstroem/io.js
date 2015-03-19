@@ -32,11 +32,11 @@ endif
 .PHONY: $(NODE_EXE) $(NODE_G_EXE)
 
 $(NODE_EXE): config.gypi out/Makefile
-	$(MAKE) -C out BUILDTYPE=Release V=$(V)
+	$(MAKE) -C out $(NODE_EXE) BUILDTYPE=Release V=$(V)
 	ln -fs out/Release/$(NODE_EXE) $@
 
 $(NODE_G_EXE): config.gypi out/Makefile
-	$(MAKE) -C out BUILDTYPE=Debug V=$(V)
+	$(MAKE) -C out $(NODE_EXE) BUILDTYPE=Debug V=$(V)
 	ln -fs out/Debug/$(NODE_EXE) $@
 
 out/Makefile: common.gypi deps/uv/uv.gyp deps/http_parser/http_parser.gyp deps/zlib/zlib.gyp deps/v8/build/toolchain.gypi deps/v8/build/features.gypi deps/v8/tools/gyp/v8.gyp node.gyp config.gypi
@@ -72,8 +72,13 @@ distclean:
 
 test: all
 	$(PYTHON) tools/test.py --mode=release message parallel sequential -J
+	$(MAKE) cctest
 	$(MAKE) jslint
 	$(MAKE) cpplint
+
+cctest: all
+	$(MAKE) -C out $@ BUILDTYPE=$(BUILDTYPE)
+	@out/$(BUILDTYPE)/$@
 
 test-parallel: all
 	$(PYTHON) tools/test.py --mode=release parallel -J
