@@ -76,8 +76,7 @@ test: all
 	$(MAKE) jslint
 	$(MAKE) cpplint
 
-cctest: all
-	$(MAKE) -C out $@ BUILDTYPE=$(BUILDTYPE)
+cctest: all build-cctest
 	@out/$(BUILDTYPE)/$@
 
 test-parallel: all
@@ -90,6 +89,9 @@ test/gc/node_modules/weak/build/Release/weakref.node: $(NODE_EXE)
 	./$(NODE_EXE) deps/npm/node_modules/node-gyp/bin/node-gyp rebuild \
 		--directory="$(shell pwd)/test/gc/node_modules/weak" \
 		--nodedir="$(shell pwd)"
+
+build-cctest: all
+	$(MAKE) -C out cctest BUILDTYPE=$(BUILDTYPE)
 
 build-addons: $(NODE_EXE)
 	rm -rf test/addons/doc-*/
