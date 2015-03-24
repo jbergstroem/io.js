@@ -8,7 +8,6 @@
       },
       'include_dirs': ['.', 'include'],
       'sources': [
-        'src/gtest-all.cc',
         'src/gtest-death-test.cc',
         'src/gtest-filepath.cc',
         'src/gtest-internal-inl.h',
