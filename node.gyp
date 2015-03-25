@@ -619,6 +619,9 @@
           'dependencies': [ 'deps/v8/tools/gyp/v8.gyp:v8' ],
         }],
       ],
+      'include_dirs': [
+        'src',
+      ],
       'defines': [
         # gtest's ASSERT macros conflict with our own.
         'GTEST_DONT_DEFINE_ASSERT_EQ=1',
@@ -629,7 +632,7 @@
         'GTEST_DONT_DEFINE_ASSERT_NE=1',
       ],
       'sources': [
-        'src/util_unittest.cc',
+        'test/cctest/util.cc',
       ],
     }
   ] # end targets
