@@ -18,6 +18,9 @@
         'src/gtest.cc',
         'src/gtest_main.cc',
       ],
+      'defines': [
+        'GTEST_TAP_PRINT_TO_STDOUT=1'
+      ]
     }
   ],
 }

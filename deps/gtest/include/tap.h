@@ -31,6 +31,7 @@
 #include <list>
 #include <iostream>
 #include <map>
+#include <fstream>
 
 namespace tap {
 
@@ -181,6 +182,7 @@ class TapListener: public ::testing::EmptyTestEventListener {
 
 public:
   virtual void OnTestEnd(const testing::TestInfo& testInfo) {
+    //printf("%s %d - %s\n", testInfo.result()->Passed() ? "ok" : "not ok", this->testNumber, testInfo.name());
     this->addTapTestResult(testInfo);
   }
 
@@ -190,11 +192,19 @@ public:
     for (ci = this->testCaseTestResultMap.begin();
 	 ci != this->testCaseTestResultMap.end(); ++ci) {
       const tap::TestSet& testSet = ci->second;
+#ifdef GTEST_TAP_PRINT_TO_STDOUT
       std::cout << testSet.toString();
+#else
+      std::ofstream tapFile;
+      const char* tapFileName = (ci->first + ".tap").c_str();
+      tapFile.open(tapFileName);
+      tapFile << testSet.toString();
+      tapFile.close();
+#endif
     }
   }
 };
 
 } // namespace tap
 
-#endif // TAP_H_
+#endif // TAP_H_ 
