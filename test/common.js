@@ -139,7 +139,7 @@ if (exports.isWindows) {
   exports.PIPE = exports.tmpDir + '/test.sock';
 }
 
-if (process.env.NODE_COMMON_PIPE) {
+/*if (process.env.NODE_COMMON_PIPE) {
   exports.PIPE = process.env.NODE_COMMON_PIPE;
   // Remove manually, the test runner won't do it
   // for us like it does for files in test/tmp.
@@ -148,7 +148,7 @@ if (process.env.NODE_COMMON_PIPE) {
   } catch (e) {
     // Ignore.
   }
-}
+}*/
 
 if (exports.isWindows) {
   exports.faketimeCli = false;
