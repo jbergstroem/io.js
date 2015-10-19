@@ -506,7 +506,7 @@ bench-idle:
 	$(NODE) benchmark/idle_clients.js &
 
 jslint:
-	$(NODE) tools/eslint/bin/eslint.js -f tap src lib test tools/eslint-rules \
+	$(NODE) tools/eslint/bin/eslint.js src lib test tools/eslint-rules \
 		--rulesdir tools/eslint-rules --reset --quiet
 
 CPPLINT_EXCLUDE ?=
@@ -535,6 +535,10 @@ cpplint:
 	@$(PYTHON) tools/cpplint.py $(CPPLINT_FILES)
 
 lint: jslint cpplint
+
+lint-ci: cpplint
+	$(NODE) tools/eslint/bin/eslint.js -f tap -o test.tap src lib test
+	tools/eslint-rules --rulesdir tools/eslint-rules --reset --quiet
 
 .PHONY: lint cpplint jslint bench clean docopen docclean doc dist distclean \
 	check uninstall install install-includes install-bin all staticlib \
