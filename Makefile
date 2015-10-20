@@ -536,14 +536,18 @@ cpplint:
 
 lint: jslint cpplint
 
-lint-ci:
-	$(NODE) tools/eslint/bin/eslint.js -f tap -o test-eslint.tap src lib test \
-	tools/eslint-rules --rulesdir tools/eslint-rules --reset --quiet
-	$(PYTHON) tools/cpplint.py --output=tap --logfile=test-cpp.tap $(CPPLINT_FILES)
+eslint-ci:
+	@$(NODE) tools/eslint/bin/eslint.js -f tap -o test-eslint.tap src lib test \
+	          tools/eslint-rules --rulesdir tools/eslint-rules --reset --quiet
+
+cpplint-ci:
+	@$(PYTHON) tools/cpplint.py --output=tap \
+	           --logfile=test-cpp.tap $(CPPLINT_FILES)
+
 
 .PHONY: lint cpplint jslint bench clean docopen docclean doc dist distclean \
 	check uninstall install install-includes install-bin all staticlib \
 	dynamiclib test test-all test-addons build-addons website-upload pkg \
 	blog blogclean tar binary release-only bench-http-simple bench-idle \
 	bench-all bench bench-misc bench-array bench-buffer bench-net \
-	bench-http bench-fs bench-tls cctest run-ci
+	bench-http bench-fs bench-tls cctest run-ci eslint-ci cpplint-ci
