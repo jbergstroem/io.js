@@ -536,9 +536,10 @@ cpplint:
 
 lint: jslint cpplint
 
-lint-ci: cpplint
-	$(NODE) tools/eslint/bin/eslint.js -f tap -o test.tap src lib test
+lint-ci:
+	$(NODE) tools/eslint/bin/eslint.js -f tap -o test-eslint.tap src lib test \
 	tools/eslint-rules --rulesdir tools/eslint-rules --reset --quiet
+	$(PYTHON) tools/cpplint.py --output=tap --logfile=test-cpp.tap $(CPPLINT_FILES)
 
 .PHONY: lint cpplint jslint bench clean docopen docclean doc dist distclean \
 	check uninstall install install-includes install-bin all staticlib \
