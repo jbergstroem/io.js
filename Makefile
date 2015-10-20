@@ -536,6 +536,9 @@ cpplint:
 
 lint: jslint cpplint
 
+lint-ci: eslint-ci cpplint-ci
+	cat test-eslint.tap test-cpp.tap > test.tap
+
 eslint-ci:
 	@$(NODE) tools/eslint/bin/eslint.js -f tap -o test-eslint.tap src lib test \
 	          tools/eslint-rules --rulesdir tools/eslint-rules --reset --quiet
