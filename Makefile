@@ -275,7 +275,7 @@ docclean:
 	-rm -rf out/doc
 
 run-ci:
-	$(PYTHON) ./configure $(CONFIG_FLAGS)
+	$(PYTHON) ./configure --with-intl=small-icu --download=all $(CONFIG_FLAGS)
 	$(MAKE)
 	$(MAKE) test-ci
 
